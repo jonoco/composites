@@ -24,38 +24,39 @@ const checkInput = (e) => {
   }
   console.log('parsedNumbers: ', parsedNumbers)
 
-  // check for composites
-  let composites = []
-  for (let cn of parsedNumbers) {
-    if (!isPrime(cn)) composites.push(cn)
+  //---
+  // check for primes
+  let primes = []
+  for (let pn of parsedNumbers) {
+    if (isPrime(pn)) primes.push(pn)
   }
 
-  // check for missing primes
-  let missingPrimes = []
+  // check for missing composites
+  let missingComposites = []
   for (let n = parsedNumbers[0] ; n <= parsedNumbers[parsedNumbers.length-1] ; n++) {
-    if (!parsedNumbers.includes(n) && isPrime(n))
-      missingPrimes.push(n)
+    if (!parsedNumbers.includes(n) && !isPrime(n) && n != 1)
+      missingComposites.push(n)
   }
 
   // compose results
   let primesResults = ''
-  if (missingPrimes.length != 0) {
-    primesResults = '<span>Found missing primes:</span> '
-    for (let p of missingPrimes) {
+  if (primes.length != 0) {
+    primesResults = '<span>Found primes: </span>'
+    for (let p of primes) {
       primesResults += `${p} `
     }
   } else {
-    primesResults = "All primes present"
+    primesResults = "No primes found"
   }
 
   let compositesResults = ''
-  if (composites.length != 0) {
-    compositesResults = '<span>Found composites:</span> '
-    for (let c of composites) {
+  if (missingComposites.length != 0) {
+    compositesResults = '<span>Found missing composites: </span>'
+    for (let c of missingComposites) {
       compositesResults += `${c} `
     }
   } else {
-    compositesResults = "No composites found"
+    compositesResults = "All composites present"
   }
 
   let inputNumbers = '<span>Input checked:</span> ' + parsedNumbers.join(" ")
